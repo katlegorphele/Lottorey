@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { createThirdwebClient } from "thirdweb";
-import { ThirdwebProvider } from "thirdweb/react";
+import { ThirdwebProvider, PayEmbed } from "thirdweb/react";
 require('dotenv').config()
 
 const geistSans = localFont({
@@ -22,17 +22,27 @@ export const metadata = {
   description: "Account Abstraction Demo",
 };
 
-const client = createThirdwebClient({ clientId: '5aaa21e877f5f6045408ccd638dace6c' });
+const client = createThirdwebClient({ clientId: '' });
 
 
 export default function RootLayout({ children }) {
-
-
-
   return (
     
     <html lang="en">
       <ThirdwebProvider>
+      client={client}
+      payOptions={{
+        supportedTokens: {
+          "1": [
+            {
+              address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              name: "Universel Rand",
+              symbol: "uZAR",
+              icon: "...",
+            },
+          ],
+        },
+      }}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
       >

@@ -1,5 +1,7 @@
 import React from 'react'
 
+
+
 const LotteryInfo = () => {
   return (
     <div className="bg-white shadow rounded-lg p-6 text-black">
