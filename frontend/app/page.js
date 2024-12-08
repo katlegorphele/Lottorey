@@ -4,9 +4,7 @@ import CurrentPlayers from "./components/CurrentPlayers";
 import LotteryPotCard from "./components/LotteryPotCard";
 import PreviousWinners from "./components/PreviousWinners";
 import ActionButtons from "./components/ActionButtons";
-
-
-const client = createThirdwebClient({ clientId: '' });
+import { client } from "./client";
 
 export default function Home() {
 

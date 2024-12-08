@@ -2,9 +2,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { createThirdwebClient } from "thirdweb";
-import { ThirdwebProvider, PayEmbed } from "thirdweb/react";
+import { ThirdwebProvider } from "thirdweb/react";
 require('dotenv').config()
+import { client } from "./client";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,7 +22,6 @@ export const metadata = {
   description: "Account Abstraction Demo",
 };
 
-const client = createThirdwebClient({ clientId: '' });
 
 
 export default function RootLayout({ children }) {

@@ -2,68 +2,103 @@
 
 import React, { useState, useEffect } from 'react'
 import { getContract, defineChain, prepareContractCall, sendTransaction, readContract } from "thirdweb";
-import { useActiveAccount, useSendTransaction } from "thirdweb/react";
-import { inAppWallet } from '@thirdweb-dev/react';
-import { client } from '@/app/client';
+import { useActiveAccount } from "thirdweb/react";
+import { client } from '../client';
 import { toWei } from 'thirdweb';
 
 
 const celo_chain = defineChain(44787);
 const base_sepolia = defineChain(84532);
 
-const contract = getContract({
+
+
+const lotteryContract = getContract({
   client: client,
   chain: defineChain(4202),
-  address: "0x4C48F3DDe928826c235bd6f125dad9D6B76A38ca"
+  address: "0xa6207895057A787a8FaCdfD46BAdcC77125A543b"
+});
+
+const uZARContract = getContract({
+  client: client,
+  chain: defineChain(4202),
+  address: "0xA39395D7D392dE775B276592BFda396CDF003006"
 });
 
 
+
+
 const ActionButtons = () => {
+
+  const [successMsg, setSuccessMsg] = useState('');
+  const [error, setError] = useState('');
   const account = useActiveAccount();
 
+  const handleEnterLottery = async () => {
+    if (account) {
 
-  const enterLottery = async () => {
-    try {
+      // check if user has approved uZAR
+      const allowance = await readContract({
+        contract: uZARContract,
+        method: "function allowance(address owner, address spender) view returns (uint256)",
+        params: [account.address, lotteryContract.address],
+      });
+      console.log('allowance', allowance);
+  
+      if (parseInt(allowance) < 5 * 10 ** 18) {
+      //   // approve uZAR
+        const transaction = await prepareContractCall({
+          contract: uZARContract,
+          method: "function approve(address,uint256)",
+          params: [lotteryContract.address, 5 * 10 ** 18],
+        });
+        const { transactionHash } = await sendTransaction({
+          transaction,
+          account,
+        });
+      }
+  
+      // // enter lottery
       const transaction = await prepareContractCall({
-        contract,
-        method: "function enterLottery()",
-        value: toWei("0.001"),
+        contract: lotteryContract,
+        method: "function enter()",
+        params: [],
       });
       const { transactionHash } = await sendTransaction({
         transaction,
         account,
       });
-    } catch (error) {
-      console.error(`Error Occured: ${error}`);
-    }
-  }
 
-  const pickWinner = async () => {
+      console.log('transactionHash', transactionHash);
+    }
+  };
+
+  const handlePickWinner = async () => {
     try {
       const transaction = await prepareContractCall({
-        contract,
+        contract: lotteryContract,
         method: "function pickWinner()",
       });
       const { transactionHash } = await sendTransaction({
         transaction,
         account,
       });
-      console.log(transactionHash);
+      
     } catch (error) {
-      console.error(`Error Occured: ${error}`);
+      setError(error.message);   
     }
   }
+
 
   return (
     <div>
       <button
-        onClick={enterLottery}
+        onClick={handleEnterLottery}
         className='w-full bg-green-600 text-white py-2 px-4 rounded mb-4'>
         Enter Lottery
       </button>
 
       <button
-        onClick={pickWinner}
+        onClick={handlePickWinner}
         className="w-full bg-green-600 text-white py-2 px-4 rounded mb-4">
         Pick Winner
       </button>
