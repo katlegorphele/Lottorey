@@ -5,11 +5,7 @@ import { getContract, defineChain, prepareContractCall, sendTransaction, readCon
 import { useActiveAccount } from "thirdweb/react";
 import { client } from '../client';
 
-const lotteryContract = getContract({
-  client: client,
-  chain: defineChain(4202),
-  address: "0xa6207895057A787a8FaCdfD46BAdcC77125A543b"
-});
+
 
 const uZARContract = getContract({
   client: client,
@@ -20,33 +16,39 @@ const uZARContract = getContract({
 const LotteryInfo = () => {
 
   const account = useActiveAccount();
-  const [userBalance, setUserBalance] = useState('');
+  const [userBalance, setUserBalance] = useState(0);
+  const [userAddress, setUserAddress] = useState('');
+
+  useEffect(() => {
+    if (account) {
+      setUserAddress(account.address)
+    }
+  }, [account])
 
   const GetUserBalance = async () => {
     const data = await readContract({
       contract: uZARContract,
       method:
         "function balanceOf(address account) view returns (uint256)",
-      params: [account],
+      params: [userAddress],
     });
-    console.log(Number(data));
-
-    setUserBalance(data)
+    console.log(data);
+    // Convert the data to a number and set the state
+    const balance = ;
+    setUserBalance(data );
   }
 
   useEffect(() => {
     GetUserBalance()
-  }, []);
+  }, [userAddress]);
+
+
 
   return (
     <div className="bg-white shadow rounded-lg p-6 text-black">
-      <h2 className="text-lg font-bold mb-4">Lottery Information</h2>
-      <p><strong>Connected Address:</strong> 0x1234...abcd</p>
+      <h2 className="text-lg font-bold mb-4">Connected Address Info</h2>
+      <p><strong>Connected Address:</strong> {userAddress}</p>
       <p><strong>User Balance:</strong> {userBalance}</p>
-      <p><strong>Pot:</strong> 5 ETH</p>
-      <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded">
-        Enter Lottery
-      </button>
     </div>
   )
 }
