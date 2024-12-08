@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react'
 import { getContract, defineChain, prepareContractCall, sendTransaction, readContract } from "thirdweb";
 import { useActiveAccount } from "thirdweb/react";
 import { client } from '../client';
+import { toWei, fromGwei } from 'thirdweb';
 
 
 
@@ -32,10 +33,9 @@ const LotteryInfo = () => {
         "function balanceOf(address account) view returns (uint256)",
       params: [userAddress],
     });
-    console.log(data);
-    // Convert the data to a number and set the state
-    const balance = ;
-    setUserBalance(data );
+    console.log(fromGwei(data.toString()));
+    const balance = Number(data) / 10**18;
+    setUserBalance(balance);
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const LotteryInfo = () => {
     <div className="bg-white shadow rounded-lg p-6 text-black">
       <h2 className="text-lg font-bold mb-4">Connected Address Info</h2>
       <p><strong>Connected Address:</strong> {userAddress}</p>
-      <p><strong>User Balance:</strong> {userBalance}</p>
+      <p><strong>User Balance:</strong> uZAR{userBalance}</p>
     </div>
   )
 }
