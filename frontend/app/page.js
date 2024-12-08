@@ -11,14 +11,14 @@ export default function Home() {
     <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Top Section: Lottery Info */}
       <div>
-        <LotteryInfo />
+        {/* <LotteryInfo /> */}
       </div>
 
       {/* Main Content: Left and Right Sections */}
       <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
         {/* Left Section: Action Buttons */}
         <div className="bg-white shadow rounded-lg p-6 space-y-4">
-          <ActionButtons/>
+          {/* <ActionButtons/> */}
         </div>
 
         {/* Right Section: Current Players, Previous Winners, and Lottery Pot */}
