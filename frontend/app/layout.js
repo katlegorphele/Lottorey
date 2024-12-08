@@ -29,19 +29,6 @@ export default function RootLayout({ children }) {
     
     <html lang="en">
       <ThirdwebProvider>
-      client={client}
-      payOptions={{
-        supportedTokens: {
-          "1": [
-            {
-              address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-              name: "Universel Rand",
-              symbol: "uZAR",
-              icon: "...",
-            },
-          ],
-        },
-      }}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
       >

@@ -2,8 +2,7 @@ import { list } from 'postcss';
 import React from 'react'
 import { createThirdwebClient, defineChain } from "thirdweb";
 import { ConnectButton } from "thirdweb/react";
-
-export const client = createThirdwebClient({ clientId: '' });
+import { client } from '../client';
 
 const ConnectWallet = () => {
 

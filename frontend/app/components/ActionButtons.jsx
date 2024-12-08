@@ -7,11 +7,6 @@ import { client } from '../client';
 import { toWei } from 'thirdweb';
 
 
-const celo_chain = defineChain(44787);
-const base_sepolia = defineChain(84532);
-
-
-
 const lotteryContract = getContract({
   client: client,
   chain: defineChain(4202),
