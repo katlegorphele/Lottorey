@@ -1,8 +1,7 @@
 'use client'
 
 import React, {useState, useEffect} from 'react'
-import { getContract, defineChain, prepareContractCall, sendTransaction, readContract } from "thirdweb";
-import { useActiveAccount } from "thirdweb/react";
+import { getContract, defineChain,readContract } from "thirdweb";
 import { client } from '../client';
 
 const lotteryContract = getContract({
