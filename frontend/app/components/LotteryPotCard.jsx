@@ -20,13 +20,13 @@ const LotteryPotCard = () => {
       contract: uZARContract,
       method:
         "function balanceOf(address account) view returns (uint256)",
-      params: [uZARContract.address],
+      params: ['0xa6207895057A787a8FaCdfD46BAdcC77125A543b'],
     });
     console.log(data);
     setLotteryPot(data);
     console.log(Number(data));
 
-    setLotteryPot(data)
+    setLotteryPot(Number(data)/ 1e18)
   }
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const LotteryPotCard = () => {
   return (
     <div className="bg-yellow-100 shadow rounded-lg p-6 text-center">
       <h2 className="text-xl font-bold">Current Lottery Pot</h2>
-      <p className="text-3xl font-bold text-yellow-600 mt-4">{lotteryPot}</p>
+      <p className="text-3xl font-bold text-yellow-600 mt-4">uZAR{lotteryPot}</p>
     </div>
   )
 }

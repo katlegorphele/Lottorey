@@ -77,6 +77,7 @@ const ActionButtons = () => {
         transaction,
         account,
       });
+      console.log(transactionHash)
       
     } catch (error) {
       setError(error.message);   
